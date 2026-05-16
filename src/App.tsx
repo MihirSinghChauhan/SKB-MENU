@@ -249,22 +249,22 @@ export default function App() {
         </div>
 
         {/* Search Bar */}
-        <div className="px-4 pb-3">
-          <div className="relative">
-            <Search className="absolute left-7 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+        <div className="px-4 pb-4 mt-2">
+          <div className="relative group">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-brand-400 transition-colors" size={18} />
             <input 
               type="text" 
-              placeholder="Search for items..." 
+              placeholder="Search menu..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-10 pr-10 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/50 transition-all font-medium"
+              className="w-full bg-bg-elevated border border-border-dark rounded-2xl py-3 pl-11 pr-10 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-brand-500/40 focus:ring-1 focus:ring-brand-500/40 transition-all font-medium shadow-inner"
             />
             {searchTerm && (
               <button 
                 onClick={() => setSearchTerm('')}
-                className="absolute right-7 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white bg-white/10 hover:bg-white/20 p-1 rounded-full transition-colors"
               >
-                <X size={16} />
+                <X size={14} />
               </button>
             )}
           </div>
@@ -379,9 +379,10 @@ export default function App() {
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
             className="fixed bottom-6 left-0 right-0 z-40 px-4 sm:max-w-md mx-auto"
           >
-            <button 
+            <motion.button 
+              whileTap={{ scale: 0.95 }}
               onClick={() => setCartOpen(true)}
-              className="w-full bg-brand-500 text-white rounded-2xl h-16 px-6 flex items-center justify-between shadow-[0_8px_32px_-8px_rgba(249,115,22,0.6)] border border-brand-400/30 overflow-hidden relative group active:scale-[0.98] transition-transform"
+              className="w-full bg-brand-500 text-white rounded-2xl h-16 px-6 flex items-center justify-between shadow-[0_8px_32px_-8px_rgba(249,115,22,0.6)] border border-brand-400/30 overflow-hidden relative group transition-transform"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-brand-600 to-brand-400 opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative flex items-center gap-4">
@@ -393,7 +394,7 @@ export default function App() {
               <div className="relative font-display font-bold text-xl">
                 ₹{cartTotal}
               </div>
-            </button>
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -540,12 +541,12 @@ export default function App() {
                     ))}
                   </div>
                   <div className="p-3 bg-bg-dark border-t border-brand-500/10 flex gap-2">
-                     <button onClick={() => { setCounterOpen(false); setCartOpen(true); }} className="flex-1 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-brand-200 font-semibold text-sm transition-colors">
+                     <motion.button whileTap={{ scale: 0.95 }} onClick={() => { setCounterOpen(false); setCartOpen(true); }} className="flex-1 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-brand-200 font-semibold text-sm transition-colors">
                        Edit
-                     </button>
-                     <button onClick={confirmOrder} className="flex-[2] py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 text-white font-bold text-sm shadow-lg shadow-emerald-500/20 active:scale-[0.98] transition-transform">
+                     </motion.button>
+                     <motion.button whileTap={{ scale: 0.95 }} onClick={confirmOrder} className="flex-[2] py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 text-white font-bold text-sm shadow-lg shadow-emerald-500/20 transition-transform relative overflow-hidden">
                        Confirm Order
-                     </button>
+                     </motion.button>
                   </div>
                 </div>
               )}
@@ -554,7 +555,13 @@ export default function App() {
               {orders.length > 0 && (
                  <div className="flex flex-col gap-4">
                    {orders.map((order, oi) => (
-                     <div key={order.id} className="bg-white/[0.03] border border-white/10 rounded-3xl overflow-hidden">
+                     <motion.div 
+                       initial={{ opacity: 0, y: 20 }}
+                       animate={{ opacity: 1, y: 0 }}
+                       transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                       key={order.id} 
+                       className="bg-white/[0.03] border border-white/10 rounded-3xl overflow-hidden"
+                     >
                        <div className="px-5 py-4 border-b border-white/5 flex items-center justify-between">
                          <div className="flex items-center gap-2">
                            <div className="relative flex items-center justify-center w-5 h-5">
@@ -576,7 +583,7 @@ export default function App() {
                            </div>
                          ))}
                        </div>
-                     </div>
+                     </motion.div>
                    ))}
                  </div>
               )}
@@ -598,13 +605,13 @@ export default function App() {
             
             {/* Action Bar */}
             <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-bg-dark via-bg-dark to-transparent pt-12 flex gap-3">
-               <button onClick={() => setCounterOpen(false)} className="flex-1 h-14 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 font-semibold active:scale-[0.98] transition-all">
+               <motion.button whileTap={{ scale: 0.95 }} onClick={() => setCounterOpen(false)} className="flex-1 h-14 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 font-semibold transition-all">
                  + Add More
-               </button>
+               </motion.button>
                {orders.length > 0 && cart.length === 0 && (
-                 <button onClick={() => { setShowPayment(true); }} className="flex-1 h-14 rounded-2xl bg-gradient-to-r from-brand-600 to-brand-500 text-white font-semibold shadow-lg shadow-brand-500/30 active:scale-[0.98] transition-all">
+                 <motion.button whileTap={{ scale: 0.95 }} onClick={() => { setShowPayment(true); }} className="flex-1 h-14 rounded-2xl bg-gradient-to-r from-brand-600 to-brand-500 text-white font-semibold shadow-lg shadow-brand-500/30 transition-all">
                    Pay Bill (₹{grandTotal})
-                 </button>
+                 </motion.button>
                )}
             </div>
 
